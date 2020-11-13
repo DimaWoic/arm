@@ -1,0 +1,22 @@
+{% load static %}
+<html>
+<head>
+    <title>{% block title %}Арм электродиспетчера{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static "arm/css/bootstrap.css" %}">
+    <link rel="stylesheet" href="{% static "arm/css/style.css" %}">
+</head>
+<body>
+    {% if user.is_authenticated %}
+        <p><a href="{% url 'record_index' %}">Оперативный журнал</a></p>
+        <p><a href="{% url 'add_record' %}">Добавить запись</a> <a href="{% url 'logout' %}">Выйти</a></p>
+    {% endif %}
+<div class='#'>
+{% block content %}
+{% endblock content %}
+
+<script src="{% static 'arm/js/jquery-3.5.1.min.js' %}"></script>
+<script src="{% static 'arm/js/popper.min.js' %}"></script>
+<script src="{% static 'arm/js/bootstrap.js' %}"></script>
+
+</body>
+</html>

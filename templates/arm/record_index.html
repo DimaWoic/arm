@@ -1,0 +1,14 @@
+{% extends 'arm/base/base.html' %}
+
+{% block content %}
+{% for record in records %}
+
+{% if record %}
+<p>{{record.date_time}} {{record.from_who}} {{record.route}} {{record.transport}} {{record.description}} {{record.note}} {{ record.brigade }} {{record.num_car}}</p>
+{% else %}
+<p>Нет записей</p>
+{% endif %}
+{% endfor %}
+
+
+{% endblock content %}

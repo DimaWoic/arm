@@ -1,0 +1,22 @@
+body {
+    background-color: 1c1c1c;
+}
+
+#login_form {
+    position: fixed; 
+    top: 25%;
+    left: 40%;
+    background-color: 383838;
+    border: 1px;
+    border-color: cornflowerblue;
+    border-style: solid;
+}
+
+#login_button {
+    position: relative;
+    left: 37%;
+}
+
+#login_text {
+    color: cornflowerblue;
+}

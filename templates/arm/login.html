@@ -1,0 +1,24 @@
+{% extends 'arm/base/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="border">
+    <div class="#" id="login_form">
+        <form method="post" class="m-3">
+        {% csrf_token %}
+        <div class="form-group">
+        <p id='login_text'>Вход в учётную запись</p>
+        <input type="hidden" name="next" value="{{ next }}">
+
+        <p id='login_text'>{{ form.username.label }}</p>
+        <p id='login_text'>{{ form.username }}</p>
+        <p id='login_text'>{{ form.password.label }}</p>
+        <p id='login_text'>{{ form.password }}</p>
+
+        <p><button type="submit" class="btn btn-primary btn-sm" id='login_button'>Вход</button></p>
+        </div>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}
