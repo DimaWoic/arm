@@ -1,5 +1,13 @@
-body {
-    background-color: 1c1c1c;
+#nav_container {
+    width: 100%;
+    float: left;
+    background-color: black;
+}
+
+#nav_bar {
+    background-color: aqua;
+    width: 350px;
+    float: left;
 }
 
 #login_form {
@@ -19,4 +27,36 @@ body {
 
 #login_text {
     color: cornflowerblue;
+}
+
+#date_time {
+    width: 10%;
+}
+
+#from_who {
+    width: 6%;
+}
+
+#route {
+    width: 5%;
+}
+
+#transport {
+    width: 7%;
+}
+
+#description {
+    width: 30%;
+}
+
+#note {
+    width: 30%;
+}
+
+#brigade {
+    width: 5%;
+}
+
+#num_car {
+    width: 5%;
 }

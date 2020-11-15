@@ -43,6 +43,7 @@ class UserLoginView(LoginView):
         context['next'] = reverse_lazy('record_index')
         return context
 
+
 class UserLogoutView(LoginRequiredMixin, LogoutView):
     next_page = 'login'
 
