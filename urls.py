@@ -6,4 +6,5 @@ urlpatterns = [
     path('add_record/', views.RecordCreateView.as_view(), name='add_record'),
     path('', views.UserLoginView.as_view(), name='login'),
     path('logout/', views.UserLogoutView.as_view(), name='logout'),
+    path('record_update/<int:pk>', views.RecordUpdateView.as_view(), name='record_update'),
 ]

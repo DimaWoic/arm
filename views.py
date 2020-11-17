@@ -1,12 +1,23 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from .models import Transport, Route, Record
-from django.views.generic import ListView, CreateView
+from .models import Record
+from django.views.generic import ListView, CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+class UserLoginView(LoginView):
+    template_name = 'arm/login.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['next'] = reverse_lazy('record_index')
+        return context
+
+
+class UserLogoutView(LoginRequiredMixin, LogoutView):
+    next_page = 'login'
 
 
 class RecordIndexView(LoginRequiredMixin, ListView):
@@ -35,16 +46,13 @@ class RecordCreateView(LoginRequiredMixin, CreateView, ListView):
         return Record.objects.all()
 
 
-class UserLoginView(LoginView):
-    template_name = 'arm/login.html'
+class RecordUpdateView(LoginRequiredMixin, UpdateView, ListView):
+    model = Record
+    template_name_suffix = '_update'
+    success_url = reverse_lazy('record_index')
+    fields = '__all__'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['next'] = reverse_lazy('record_index')
+        context['record'] = Record.objects.all()
         return context
-
-
-class UserLogoutView(LoginRequiredMixin, LogoutView):
-    next_page = 'login'
-
-

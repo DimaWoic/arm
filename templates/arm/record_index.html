@@ -13,6 +13,7 @@
       <th scope="col" id="note">Примечание</th>
       <th scope="col" id="brigade">Бригада</th>
       <th scope="col" id="num_car">Номер машины</th>
+      <th scope="col" id="update">Редактировать запись</th>
     </tr>
   </thead>
   {% for record in records %}
@@ -27,6 +28,7 @@
       <td>{{record.note}}</td>
       <td>{{record.brigade }}</td>
       <td>{{record.num_car}}</td>
+      <td><a href="{% url 'record_update' record.pk %}">Редактировать</a></td>
     </tr>
   {% endif %}
   {% endfor %}
