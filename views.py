@@ -1,10 +1,9 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
-from .models import Record
+from .models import Record, PhoneNumbers
 from django.views.generic import ListView, CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 
 
 class UserLoginView(LoginView):
@@ -56,3 +55,35 @@ class RecordUpdateView(LoginRequiredMixin, UpdateView, ListView):
         context = super().get_context_data(**kwargs)
         context['record'] = Record.objects.all()
         return context
+
+
+class RecordSearchResultView(LoginRequiredMixin, ListView):
+    model = Record
+    template_name_suffix = '_result'
+    template_name = 'arm/record_search.html'
+    context_object_name = 'records'
+
+    def get_queryset(self):
+        search = self.request.GET.get('q')
+        query = Q(from_who=search) | Q(description=search)
+        result = Record.objects.filter(query)
+        return result
+
+
+class RecordSearchDateResultView(LoginRequiredMixin, ListView):
+    model = Record
+    template_name = 'arm/record_search_date.html'
+    template_name_suffix = '_date'
+    context_object_name = 'records'
+
+    def get_queryset(self):
+        search = self.request.GET.get('date')
+        query = Record.objects.filter(date=search)
+        return query
+
+
+class PhoneNumbersIndexView(LoginRequiredMixin, ListView):
+    model = PhoneNumbers
+    template_name = 'arm/phonenumbers_index.html'
+    template_name_suffix = '_index'
+    context_object_name = 'numbers'

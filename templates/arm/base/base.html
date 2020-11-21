@@ -17,7 +17,7 @@
     </nav>
     <div class="#">
         {% if user.is_authenticated %}
-        <p><a href="{% url 'record_index' %}">Оперативный журнал</a> <a href="">Телефонный справочник</a> <a href="">Схемы электроснабжения</a></p>
+        <p><a href="{% url 'record_index' %}">Оперативный журнал</a> <a href="{% url 'phone_numbers' %}">Телефонный справочник</a> <a href="">Схемы электроснабжения</a></p>
        {% endif %}
     </div>
 <div class='#'>

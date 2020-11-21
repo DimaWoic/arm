@@ -1,0 +1,34 @@
+{% extends 'arm/base/base.html' %}
+{% block title %} Телефонный справочник {% endblock title %}
+{% block content %}
+
+<p><h3>Телефонный справочник</h3></p>
+<p><a href="#">Добавить номер</a> <form action="#" method="get">
+  <input name="q" type="text" placeholder="Искать...">
+</form>
+</p>
+
+<table class="table table-hover table-dark table-bordered">
+  <thead>
+    <tr>
+      <th scope="col" id="description">Абонент</th>
+      <th scope="col" id="note">Номер рабочего телефона</th>
+      <th scope="col" id="brigade">Номер мобильного телефона</th>
+      <th scope="col" id="update">Редактировать запись</th>
+    </tr>
+  </thead>
+  {% for number in numbers %}
+  <tbody>
+  {% if numbers %}
+    <tr class="bg-light text-dark">
+      <td>{{ number.name }}</td>
+      <td>{{ number.work }}</td>
+      <td>{{ number.mobile }}</td>
+      <td><a href="#">Редактировать</a></td>
+    </tr>
+  {% endif %}
+  {% endfor %}
+  </tbody>
+</table>
+
+{% endblock content %}

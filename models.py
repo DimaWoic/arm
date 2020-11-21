@@ -34,7 +34,8 @@ class NumCar(models.Model):
      
 
 class Record(models.Model):
-    date_time = models.DateTimeField(verbose_name='время заявки', auto_now_add=True)
+    date = models.DateField(verbose_name='дата заявки', auto_now_add=True, null=True)
+    time = models.TimeField(verbose_name='время заявки', auto_now_add=True, null=True)
     from_who = models.CharField(verbose_name='от кого', max_length=250, default='')
     transport = models.ForeignKey(Transport, on_delete=models.CASCADE, verbose_name='вид транспорта')
     route = models.ForeignKey(Route, on_delete=models.CASCADE, verbose_name='номер маршрута')
@@ -49,3 +50,16 @@ class Record(models.Model):
     
     def __str__(self):
         return self.description
+
+
+class PhoneNumbers(models.Model):
+    name = models.CharField(max_length=100, verbose_name='абонент', default='')
+    work = models.CharField(max_length=12, verbose_name='рабочий номер', default='')
+    mobile = models.CharField(max_length=12, verbose_name='мобильный телефон', default='')
+
+    class Meta:
+        verbose_name = 'Номера телефонов'
+        verbose_name_plural = 'Номеров телефонов'
+
+    def __str__(self):
+        return self.name
