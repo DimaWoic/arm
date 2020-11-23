@@ -1,0 +1,35 @@
+{% extends 'arm/base/base.html' %}
+{% block title %} Категории номеров {% endblock title %}
+{% block content %}
+
+<p><h3>Категории номеров телефонного справочника</h3></p>
+<p><a href="#">Добавить категорию</a> <form action="#" method="get">
+  <input name="q" type="text" placeholder="Искать...">
+</form>
+</p>
+
+<table class="table table-hover table-dark table-bordered">
+  <thead>
+    <tr>
+      <th scope="col" id="description">Категории</th>
+      <th scope="col" id="update">Редактировать запись</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% if units %}
+  {% for unit in units %}
+    <tr class="bg-light text-dark">
+      <td>{{ unit.name }}</td>
+      <td><a href="#">Редактировать</a></td>
+    </tr>
+  {% endfor %}
+  {% endif %}
+  </tbody>
+</table>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+<input type="submit" value="Добавить">
+
+{% endblock content %}

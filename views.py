@@ -1,5 +1,5 @@
-from .models import Record, PhoneNumbers
-from django.views.generic import ListView, CreateView, UpdateView
+from .models import Record, PhoneNumbers, Category
+from django.views.generic import ListView, CreateView, UpdateView, RedirectView
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,6 +8,7 @@ from django.db.models import Q
 
 class UserLoginView(LoginView):
     template_name = 'arm/login.html'
+    redirect_authenticated_user = True
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -39,7 +40,6 @@ class RecordCreateView(LoginRequiredMixin, CreateView, ListView):
     context_object_name = 'record'
     success_url = reverse_lazy('record_index')
     fields = '__all__'
-    login_url = reverse_lazy('login')
 
     def get_queryset(self):
         return Record.objects.all()
@@ -87,3 +87,14 @@ class PhoneNumbersIndexView(LoginRequiredMixin, ListView):
     template_name = 'arm/phonenumbers_index.html'
     template_name_suffix = '_index'
     context_object_name = 'numbers'
+
+
+class CategoryUnitCreateView(LoginRequiredMixin, CreateView, ListView):
+    model = Category
+    template_name = 'arm/category_unit_add.html'
+    template_name_suffix = '_add'
+    success_url = reverse_lazy('phone_numbers')
+    fields = '__all__'
+    context_object_name = 'units'
+    queryset = Category.objects.all()
+

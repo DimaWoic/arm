@@ -3,7 +3,8 @@
 {% block content %}
 
 <p><h3>Телефонный справочник</h3></p>
-<p><a href="#">Добавить номер</a> <form action="#" method="get">
+<p><a href="#">Добавить номер</a> <a href="{% url 'units_add' %}">Добавить категорию абонентов</a>
+<form action="#" method="get">
   <input name="q" type="text" placeholder="Искать...">
 </form>
 </p>

@@ -52,7 +52,20 @@ class Record(models.Model):
         return self.description
 
 
+class Category(models.Model):
+    name = models.CharField(verbose_name='подразделение', max_length=100, default='')
+    cat = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'подразделение'
+        verbose_name_plural = 'подразделения'
+
+    def __str__(self):
+        return self.name
+
+
 class PhoneNumbers(models.Model):
+    unit = models.ForeignKey(Category, on_delete=models.CASCADE, default='')
     name = models.CharField(max_length=100, verbose_name='абонент', default='')
     work = models.CharField(max_length=12, verbose_name='рабочий номер', default='')
     mobile = models.CharField(max_length=12, verbose_name='мобильный телефон', default='')
