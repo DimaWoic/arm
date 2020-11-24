@@ -10,10 +10,7 @@
         <p id='login_text'>Вход в учётную запись</p>
         <input type="hidden" name="next" value="{{ next }}">
 
-        <p id='login_text'>{{ form.username.label }}</p>
-        <p id='login_text'>{{ form.username }}</p>
-        <p id='login_text'>{{ form.password.label }}</p>
-        <p id='login_text'>{{ form.password }}</p>
+        {{form.as_p}}
 
         <p><button type="submit" class="btn btn-primary btn-sm" id='login_button'>Вход</button></p>
         </div>

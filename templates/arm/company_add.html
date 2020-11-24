@@ -1,9 +1,10 @@
 {% extends 'arm/base/base.html' %}
-{% block title %} Категории номеров {% endblock title %}
+{% block title %} Абоненты {% endblock title %}
 {% block content %}
 
-<p><h3>Категории номеров телефонного справочника</h3></p>
-<p><a href="#">Добавить категорию</a> <form action="#" method="get">
+<p><h3>Абоненты телефонного справочника</h3></p>
+<p><a href="#">Добавить абонента</a> 
+<form action="#" method="get">
   <input name="q" type="text" placeholder="Искать...">
 </form>
 </p>
@@ -11,15 +12,15 @@
 <table class="table table-hover table-dark table-bordered">
   <thead>
     <tr>
-      <th scope="col" id="description">Категории</th>
+      <th scope="col" id="description">Предприятие</th>
       <th scope="col" id="update">Редактировать запись</th>
     </tr>
   </thead>
   <tbody>
-  {% if units %}
-  {% for unit in units %}
+  {% if company %}
+  {% for c in company %}
     <tr class="bg-light text-dark">
-      <td>{{ unit.name }}</td>
+      <td>{{ c.name }}</td>
       <td><a href="#">Редактировать</a></td>
     </tr>
   {% endfor %}

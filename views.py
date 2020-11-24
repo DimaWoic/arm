@@ -1,4 +1,4 @@
-from .models import Record, PhoneNumbers, Category
+from .models import Record, PhoneNumbers, Company, CompanyUnit
 from django.views.generic import ListView, CreateView, UpdateView, RedirectView
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
@@ -89,12 +89,25 @@ class PhoneNumbersIndexView(LoginRequiredMixin, ListView):
     context_object_name = 'numbers'
 
 
+class CompanyCreateView(LoginRequiredMixin, CreateView, ListView):
+    model = Company
+    template_name = 'arm/company_add.html'
+    template_name_suffix = '_add'
+    success_url = reverse_lazy('company_add')
+    fields = '__all__'
+    context_object_name = 'company'
+    queryset = Company.objects.all()
+
+
 class CategoryUnitCreateView(LoginRequiredMixin, CreateView, ListView):
-    model = Category
+    model = CompanyUnit
     template_name = 'arm/category_unit_add.html'
     template_name_suffix = '_add'
     success_url = reverse_lazy('phone_numbers')
     fields = '__all__'
     context_object_name = 'units'
-    queryset = Category.objects.all()
+    queryset = CompanyUnit.objects.all()
+
+
+
 
