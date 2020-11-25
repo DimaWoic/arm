@@ -2,8 +2,8 @@
 {% block title %} Абоненты {% endblock title %}
 {% block content %}
 
-<p><h3>Абоненты телефонного справочника</h3></p>
-<p><a href="#">Добавить абонента</a> 
+<p><h3>Организации телефонного справочника</h3></p>
+<a href="{% url 'company_add' %}">Добавить организацию</a>
 <form action="#" method="get">
   <input name="q" type="text" placeholder="Искать...">
 </form>

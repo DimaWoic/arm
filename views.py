@@ -109,5 +109,9 @@ class CategoryUnitCreateView(LoginRequiredMixin, CreateView, ListView):
     queryset = CompanyUnit.objects.all()
 
 
-
-
+class CompanyIndexView(LoginRequiredMixin, ListView):
+    model = Company
+    template_name = 'arm/company_index.html'
+    template_name_suffix = '_index'
+    context_object_name = 'companies'
+    queryset = Company.objects.all()

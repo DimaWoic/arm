@@ -10,5 +10,6 @@ urlpatterns = [
     path('record_search/', views.RecordSearchResultView.as_view(), name='search'),
     path('record_search_date/', views.RecordSearchDateResultView.as_view(), name='search_date'),
     path('phone_numbers/', views.PhoneNumbersIndexView.as_view(), name='phone_numbers'),
-    path('units_add/', views.CompanyCreateView.as_view(), name='company_add'),
+    path('company_add/', views.CompanyCreateView.as_view(), name='company_add'),
+    path('companies/', views.CompanyIndexView.as_view(), name='company_index'),
 ]
