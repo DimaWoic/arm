@@ -78,6 +78,7 @@ class CompanyUnit(models.Model):
 class PhoneNumbers(models.Model):
     unit = models.ForeignKey(CompanyUnit, on_delete=models.CASCADE, default='')
     name = models.CharField(max_length=100, verbose_name='абонент', default='')
+    position = models.CharField(max_length=100, verbose_name='должность', default='')
     work = models.CharField(max_length=12, verbose_name='рабочий номер', default='')
     mobile = models.CharField(max_length=12, verbose_name='мобильный телефон', default='')
 

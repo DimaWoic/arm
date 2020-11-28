@@ -3,16 +3,19 @@
 {% block content %}
 
 <p><h3>Телефонный справочник</h3></p>
-<p><a href="#">Добавить номер</a> <a href="{% url 'company_add' %}">Добавить категорию абонентов</a>
+<p><a href="{% url 'phonenumber_add' c_unit.pk %}">Добавить номер</a>
 <form action="#" method="get">
   <input name="q" type="text" placeholder="Искать...">
 </form>
 </p>
 
+<p>Телефонные намера {{ c_unit.name }}</p>
+
 <table class="table table-hover table-dark table-bordered">
   <thead>
     <tr>
-      <th scope="col" id="description">Абонент</th>
+      <th scope="col" id="description">Ф.И.О.</th>
+      <th scope="col" id="description">Должность</th>
       <th scope="col" id="note">Номер рабочего телефона</th>
       <th scope="col" id="brigade">Номер мобильного телефона</th>
       <th scope="col" id="update">Редактировать запись</th>
@@ -23,9 +26,10 @@
   {% if numbers %}
     <tr class="bg-light text-dark">
       <td>{{ number.name }}</td>
+      <td>{{ number.position }}</td>
       <td>{{ number.work }}</td>
       <td>{{ number.mobile }}</td>
-      <td><a href="#">Редактировать</a></td>
+      <td><a href="{% url 'phone_update' number.pk %}">Редактировать</a></td>
     </tr>
   {% endif %}
   {% endfor %}

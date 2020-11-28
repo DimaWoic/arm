@@ -1,0 +1,15 @@
+{% extends 'arm/base/base.html' %}
+{% block title %} Абоненты {% endblock title %}
+{% block content %}
+
+<p><h3>Редактирование абонента</h3></p>
+
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+<input type="submit" value="Изменить">
+
+<a href="#" role="button">Удалить абонента</a>
+
+{% endblock content %}

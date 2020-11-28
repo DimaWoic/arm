@@ -1,5 +1,5 @@
 from .models import Record, PhoneNumbers, Company, CompanyUnit
-from django.views.generic import ListView, CreateView, UpdateView, RedirectView
+from django.views.generic import ListView, CreateView, UpdateView, TemplateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -83,10 +83,20 @@ class RecordSearchDateResultView(LoginRequiredMixin, ListView):
 
 
 class PhoneNumbersIndexView(LoginRequiredMixin, ListView):
-    model = PhoneNumbers
     template_name = 'arm/phonenumbers_index.html'
     template_name_suffix = '_index'
     context_object_name = 'numbers'
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        company_unit = CompanyUnit.objects.get(pk=pk)
+        queryset = PhoneNumbers.objects.filter(unit__name=company_unit)
+        return queryset
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        context['c_unit'] = CompanyUnit.objects.get(pk=self.kwargs['pk'])
+        return context
 
 
 class CompanyCreateView(LoginRequiredMixin, CreateView, ListView):
@@ -115,3 +125,51 @@ class CompanyIndexView(LoginRequiredMixin, ListView):
     template_name_suffix = '_index'
     context_object_name = 'companies'
     queryset = Company.objects.all()
+
+
+class CompanyUnitIndexView(LoginRequiredMixin, ListView):
+    template_name = 'arm/company_unit_index.html'
+    template_name_suffix = '_index'
+    context_object_name = 'units'
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        company = Company.objects.get(pk=pk)
+        queryset = CompanyUnit.objects.filter(company__name=company)
+        return queryset
+
+
+class PhoneNumberAddView(LoginRequiredMixin, CreateView):
+    model = PhoneNumbers
+    template_name = 'arm/phone_number_add.html'
+    template_name_suffix = '_add'
+    fields = ['name', 'position', 'work', 'mobile']
+    success_url = reverse_lazy('phone_done')
+
+    def get_form(self):
+        form = super().get_form()
+        form.instance.unit = CompanyUnit.objects.get(pk=self.kwargs['pk'])
+        return form
+
+
+class PhoneAddDoneView(LoginRequiredMixin, TemplateView):
+    template_name = 'arm/phone_number_add_done.html'
+
+
+class PhoneNumberUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = 'arm/phone_number_update.html'
+    template_name_suffix = '_update'
+    model = PhoneNumbers
+    success_url = reverse_lazy('phone_update')
+    fields = ['name', 'position', 'work', 'mobile']
+
+
+class PhoneNumberDeleteView(LoginRequiredMixin, DeleteView):
+    model = PhoneNumbers
+    success_url = reverse_lazy('company_index')
+
+    def get_context_data(self):
+        print(self.kwargs)
+        context = super().get_context_data()
+        context['number'] = PhoneNumbers.objects.get(pk=self.kwargs['pk'])
+        return context
