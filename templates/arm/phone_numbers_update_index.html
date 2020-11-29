@@ -10,7 +10,6 @@
 </p>
 
 <p>Телефонные намера {{ c_unit.name }}</p>
-<p><a href="{% url 'phone_update_index' c_unit.pk %}">Редактировать</a></p>
 
 <table class="table table-hover table-dark table-bordered">
   <thead>
@@ -19,6 +18,8 @@
       <th scope="col" id="description">Должность</th>
       <th scope="col" id="note">Номер рабочего телефона</th>
       <th scope="col" id="brigade">Номер мобильного телефона</th>
+      <th scope="col" id="update">Редактировать запись</th>
+      <th scope="col" id="update">Удалить запись</th>
     </tr>
   </thead>
   {% for number in numbers %}
@@ -29,6 +30,9 @@
       <td>{{ number.position }}</td>
       <td>{{ number.work }}</td>
       <td>{{ number.mobile }}</td>
+      <td><a href="{% url 'phone_update' number.pk %}">Редактировать</a></td>
+      <td><a href="{% url 'phone_delete' number.pk %}">Удалить</a></td>
+
     </tr>
   {% endif %}
   {% endfor %}

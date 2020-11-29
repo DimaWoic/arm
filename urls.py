@@ -16,5 +16,7 @@ urlpatterns = [
     path('phonenumber_add/<int:pk>', views.PhoneNumberAddView.as_view(), name='phonenumber_add'),
     path('phone_number_add_done/', views.PhoneAddDoneView.as_view(), name='phone_done'),
     path('phone_number_update/<int:pk>', views.PhoneNumberUpdateView.as_view(), name='phone_update'),
-    path('phone_number_delete/<int:pk>', views.PhoneNumberDeleteView.as_view(), name='phone_delete')
+    path('phone_number_delete/<int:pk>', views.PhoneNumberDeleteView.as_view(), name='phone_delete'),
+    path('phone_number_update_index/<int:pk>', views.PhoneNumberUpdateIndex.as_view(), name='phone_update_index'),
+    path('phone_number_update_done/', views.PhoneNumberUpdateSucces.as_view(), name='phone_update_done'),
 ]

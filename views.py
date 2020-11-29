@@ -160,16 +160,32 @@ class PhoneNumberUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'arm/phone_number_update.html'
     template_name_suffix = '_update'
     model = PhoneNumbers
-    success_url = reverse_lazy('phone_update')
+    success_url = reverse_lazy('phone_update_done')
     fields = ['name', 'position', 'work', 'mobile']
+
+
+class PhoneNumberUpdateSucces(LoginRequiredMixin, TemplateView):
+    template_name = 'arm/number_update_succes.html'
 
 
 class PhoneNumberDeleteView(LoginRequiredMixin, DeleteView):
     model = PhoneNumbers
     success_url = reverse_lazy('company_index')
 
+
+class PhoneNumberUpdateIndex(LoginRequiredMixin, ListView):
+    template_name = 'arm/phone_numbers_update_index.html'
+    template_name_suffix = '_index'
+    context_object_name = 'numbers'
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        company_unit = CompanyUnit.objects.get(pk=pk)
+        queryset = PhoneNumbers.objects.filter(unit__name=company_unit)
+        return queryset
+
     def get_context_data(self):
-        print(self.kwargs)
         context = super().get_context_data()
-        context['number'] = PhoneNumbers.objects.get(pk=self.kwargs['pk'])
+        context['c_unit'] = CompanyUnit.objects.get(pk=self.kwargs['pk'])
         return context
+

@@ -1,0 +1,18 @@
+{% extends 'arm/base/base.html' %}
+{% block title %} Абоненты {% endblock title %}
+{% block content %}
+
+<p><h3>Удаление абонента</h3></p>
+
+
+<div class="mt-4">
+    <p>Удалить  {{phonenumbers.name}}???</p>
+</div>
+
+<form method="post">{% csrf_token %}
+            <input type="submit" value="Удалить">
+        </form>
+
+
+
+{% endblock content %}
