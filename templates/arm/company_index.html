@@ -9,11 +9,12 @@
 </form>
 </p>
 
+<p><a href="#">Редактировать</a></p>
+
 <table class="table table-hover table-dark table-bordered">
   <thead>
     <tr>
       <th scope="col" id="description">Организация</th>
-      <th scope="col" id="update">Редактировать запись</th>
     </tr>
   </thead>
   {% if companies %}
@@ -21,7 +22,6 @@
   <tbody>
     <tr class="bg-light text-dark">
       <td><a href="{% url 'company_units' c.pk %}">{{ c.name }}</a></td>
-      <td><a href="#">Редактировать</a></td>
     </tr>
   {% endfor %}
   {% endif %}

@@ -127,6 +127,26 @@ class CompanyIndexView(LoginRequiredMixin, ListView):
     queryset = Company.objects.all()
 
 
+class CompanyUpdateIndexView(LoginRequiredMixin, ListView):
+    template_name = 'arm/company_update_index.html'
+    template_name_suffix = '_index'
+    context_object_name = 'companies'
+    queryset = Company.objects.all()
+
+
+class CompanyUpdateView(LoginRequiredMixin, UpdateView):
+    model = Company
+    template_name_suffix = '_update'
+    template_name = 'arm/company_update.html'
+    success_url = reverse_lazy('company_index')
+    fields = '__all__'
+
+
+class CompanyDeleteView(LoginRequiredMixin, DeleteView):
+    model = Company
+    success_url = reverse_lazy('company_index')
+
+
 class CompanyUnitIndexView(LoginRequiredMixin, ListView):
     template_name = 'arm/company_unit_index.html'
     template_name_suffix = '_index'
