@@ -2,35 +2,12 @@
 {% block title %} Абоненты {% endblock title %}
 {% block content %}
 
-<p><h3>Организации телефонного справочника</h3></p>
-<a href="{% url 'company_add' %}">Добавить организацию</a>
-<form action="#" method="get">
-  <input name="q" type="text" placeholder="Искать...">
-</form>
-</p>
-
-<table class="table table-hover table-dark table-bordered">
-  <thead>
-    <tr>
-      <th scope="col" id="description">Предприятие</th>
-      <th scope="col" id="update">Редактировать запись</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% if company %}
-  {% for c in company %}
-    <tr class="bg-light text-dark">
-      <td>{{ c.name }}</td>
-      <td><a href="#">Редактировать</a></td>
-    </tr>
-  {% endfor %}
-  {% endif %}
-  </tbody>
-</table>
+<p><h3>Добавлении организации телефонного справочника</h3></p>
 
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
 <input type="submit" value="Добавить">
+<a href="{% url 'company_edit_index' %}">Отменить</a>
 
 {% endblock content %}

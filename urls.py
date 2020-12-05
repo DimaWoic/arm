@@ -19,4 +19,12 @@ urlpatterns = [
     path('phone_number_delete/<int:pk>', views.PhoneNumberDeleteView.as_view(), name='phone_delete'),
     path('phone_number_update_index/<int:pk>', views.PhoneNumberUpdateIndex.as_view(), name='phone_update_index'),
     path('phone_number_update_done/', views.PhoneNumberUpdateSucces.as_view(), name='phone_update_done'),
+    path('company_edit_index/', views.CompanyUpdateIndexView.as_view(), name='company_edit_index'),
+    path('company_edit/<int:pk>', views.CompanyUpdateView.as_view(), name='company_edit'),
+    path('company_delete/<int:pk>', views.CompanyDeleteView.as_view(), name='company_delete'),
+    path('company_unit_edit_index/<int:pk>', views.CompanyUnitUpdateIndexView.as_view(), name='company_unit_edit_index'),
+    path('company_unit_edit/<int:pk>', views.CompanyUnitUpdateView.as_view(), name='company_unit_edit'),
+    path('company_unit_delete/<int:pk>', views.CompanyUnitDeleteView.as_view(), name='company_unit_delete'),
+    path('company_update_done/', views.CompanyUpdateSuccessfullyView.as_view(), name='company_update_done'),
+    path('company_delete_done/', views.CompanyDeleteSuccessfullyView.as_view(), name='company_delete_done'),
 ]

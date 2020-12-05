@@ -1,0 +1,19 @@
+{% extends 'arm/base/base.html' %}
+{% block title %} Удаление подразделения {% endblock title %}
+{% block content %}
+
+<p><h3>Удаление подразделения</h3></p>
+
+
+<div class="mt-4">
+    <p>Удалить  {{ companyunit.name }}???</p>
+</div>
+
+<form method="post">{% csrf_token %}
+            <input type="submit" value="Удалить">
+</form>
+<p><a href="{% url 'company_unit_edit_index' unit_pk %}">Отменить</a></p>
+
+
+
+{% endblock content %}

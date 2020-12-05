@@ -103,7 +103,7 @@ class CompanyCreateView(LoginRequiredMixin, CreateView, ListView):
     model = Company
     template_name = 'arm/company_add.html'
     template_name_suffix = '_add'
-    success_url = reverse_lazy('company_add')
+    success_url = reverse_lazy('company_edit_index')
     fields = '__all__'
     context_object_name = 'company'
     queryset = Company.objects.all()
@@ -138,13 +138,21 @@ class CompanyUpdateView(LoginRequiredMixin, UpdateView):
     model = Company
     template_name_suffix = '_update'
     template_name = 'arm/company_update.html'
-    success_url = reverse_lazy('company_index')
+    success_url = reverse_lazy('company_update_done')
     fields = '__all__'
+
+
+class CompanyUpdateSuccessfullyView(LoginRequiredMixin, TemplateView):
+    template_name = 'arm/company_update_done.html'
 
 
 class CompanyDeleteView(LoginRequiredMixin, DeleteView):
     model = Company
-    success_url = reverse_lazy('company_index')
+    success_url = reverse_lazy('company_delete_done')
+
+
+class CompanyDeleteSuccessfullyView(LoginRequiredMixin, TemplateView):
+    template_name = 'arm/company_delete_done.html'
 
 
 class CompanyUnitIndexView(LoginRequiredMixin, ListView):
@@ -157,6 +165,56 @@ class CompanyUnitIndexView(LoginRequiredMixin, ListView):
         company = Company.objects.get(pk=pk)
         queryset = CompanyUnit.objects.filter(company__name=company)
         return queryset
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        context['c_pk'] = Company.objects.get(pk=self.kwargs['pk'])
+        return context
+
+
+class CompanyUnitUpdateIndexView(LoginRequiredMixin, ListView):
+    template_name = 'arm/company_unit_update_index.html'
+    template_name_suffix = '_index'
+    context_object_name = 'units'
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        company = Company.objects.get(pk=pk)
+        queryset = CompanyUnit.objects.filter(company__name=company)
+        return queryset
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        context['c_pk'] = Company.objects.get(pk=self.kwargs['pk'])
+        return context
+
+
+class CompanyUnitUpdateView(LoginRequiredMixin, UpdateView):
+    model = CompanyUnit
+    template_name_suffix = '_update'
+    template_name = 'arm/company_unit_update.html'
+    success_url = reverse_lazy('company_index')
+    fields = ['name']
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        context['unit'] = CompanyUnit.objects.get(pk=self.kwargs['pk'])
+        return context
+
+    def get_form(self):
+        form = super().get_form()
+        form.instance.company = Company.objects.get(pk=self.kwargs['pk'])
+        return form
+
+
+class CompanyUnitDeleteView(LoginRequiredMixin, DeleteView):
+    model = CompanyUnit
+    success_url = reverse_lazy('company_index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['unit_pk'] = CompanyUnit.objects.get(name=context['object']).pk
+        return context
 
 
 class PhoneNumberAddView(LoginRequiredMixin, CreateView):

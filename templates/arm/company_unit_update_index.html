@@ -1,0 +1,35 @@
+{% extends 'arm/base/base.html' %}
+{% block title %} Редактирование подразделений {% endblock title %}
+{% block content %}
+
+<p><h3>Редактирование подразделений</h3></p>
+
+<form action="#" method="get">
+  <input name="q" type="text" placeholder="Искать...">
+</form>
+</p>
+
+<p><a href="#">Добавить подразделение</a>
+
+<table class="table table-hover table-dark table-bordered">
+  <thead>
+    <tr>
+      <th scope="col" id="description">Подразделение</th>
+      <th scope="col" id="description">Редактировать</th>
+      <th scope="col" id="description">Удалить</th>
+    </tr>
+  </thead>
+  {% if units %}
+  {% for c in units %}
+  <tbody>
+    <tr class="bg-light text-dark">
+      <td>{{ c.name }}</td>
+      <td><a href="{% url 'company_unit_edit' c.pk %}">Редактировать</a></td>
+      <td><a href="{% url 'company_unit_delete' c.pk %}">Удалить</a></td>
+    </tr>
+  {% endfor %}
+  {% endif %}
+  </tbody>
+</table>
+
+{% endblock content %}

@@ -1,0 +1,14 @@
+{% extends 'arm/base/base.html' %}
+{% block title %} Абоненты {% endblock title %}
+{% block content %}
+
+<p><h3>Редактирование компании</h3></p>
+
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+<input type="submit" value="Сохранить">
+<p><a href="{% url 'company_edit_index' %}">Отменить</a></p>
+
+{% endblock content %}
