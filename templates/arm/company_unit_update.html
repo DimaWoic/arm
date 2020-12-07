@@ -8,7 +8,8 @@
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-<input type="submit" value="Сохранить">
+<a type="submit" href="{% url 'company_unit_update_done' unit.pk %}">Сохранить</a>
+</form>
 <p><a href="{% url 'company_unit_edit_index' unit.pk %}">Отменить</a></p>
 
 {% endblock content %}

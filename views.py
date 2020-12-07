@@ -7,6 +7,7 @@ from django.db.models import Q
 
 
 class UserLoginView(LoginView):
+    """Контроллер формы входа в систему"""
     template_name = 'arm/login.html'
     redirect_authenticated_user = True
 
@@ -17,10 +18,12 @@ class UserLoginView(LoginView):
 
 
 class UserLogoutView(LoginRequiredMixin, LogoutView):
+    """Контроллер формы выхода из системы"""
     next_page = 'login'
 
 
 class RecordIndexView(LoginRequiredMixin, ListView):
+    """Контроллер вывода всех записей в оперативном журнале"""
     queryset = Record.objects.all()
     template_name = 'arm/record_index.html'
     template_name_suffix = '_index'
@@ -34,6 +37,7 @@ class RecordIndexView(LoginRequiredMixin, ListView):
 
 
 class RecordCreateView(LoginRequiredMixin, CreateView, ListView):
+    """Контроллер создания записи в оперативном журнале"""
     model = Record
     template_name_suffix = '_create'
     template_name = 'arm/record_create.html'
@@ -46,6 +50,7 @@ class RecordCreateView(LoginRequiredMixin, CreateView, ListView):
 
 
 class RecordUpdateView(LoginRequiredMixin, UpdateView, ListView):
+    """Контроллер изменения записи в оперативном журнале"""
     model = Record
     template_name_suffix = '_update'
     success_url = reverse_lazy('record_index')
@@ -58,6 +63,7 @@ class RecordUpdateView(LoginRequiredMixin, UpdateView, ListView):
 
 
 class RecordSearchResultView(LoginRequiredMixin, ListView):
+    """Контроллер поиска записи в оперативном журнале"""
     model = Record
     template_name_suffix = '_result'
     template_name = 'arm/record_search.html'
@@ -71,6 +77,7 @@ class RecordSearchResultView(LoginRequiredMixin, ListView):
 
 
 class RecordSearchDateResultView(LoginRequiredMixin, ListView):
+    """Контроллер вывода результата поиска записи в оперативном журнале"""
     model = Record
     template_name = 'arm/record_search_date.html'
     template_name_suffix = '_date'
@@ -83,6 +90,7 @@ class RecordSearchDateResultView(LoginRequiredMixin, ListView):
 
 
 class PhoneNumbersIndexView(LoginRequiredMixin, ListView):
+    """Контроллер вывода телефонных номеров определённого абонента"""
     template_name = 'arm/phonenumbers_index.html'
     template_name_suffix = '_index'
     context_object_name = 'numbers'
@@ -100,6 +108,7 @@ class PhoneNumbersIndexView(LoginRequiredMixin, ListView):
 
 
 class CompanyCreateView(LoginRequiredMixin, CreateView, ListView):
+    """Контроллер создания организации телефонного справочника"""
     model = Company
     template_name = 'arm/company_add.html'
     template_name_suffix = '_add'
@@ -109,17 +118,22 @@ class CompanyCreateView(LoginRequiredMixin, CreateView, ListView):
     queryset = Company.objects.all()
 
 
-class CategoryUnitCreateView(LoginRequiredMixin, CreateView, ListView):
+class CompanyUnitCreateView(LoginRequiredMixin, CreateView):
+    """Контроллер создания подразделения организации телефонного справочника"""
     model = CompanyUnit
-    template_name = 'arm/category_unit_add.html'
+    template_name = 'arm/company_unit_add.html'
     template_name_suffix = '_add'
-    success_url = reverse_lazy('phone_numbers')
-    fields = '__all__'
-    context_object_name = 'units'
-    queryset = CompanyUnit.objects.all()
+    success_url = reverse_lazy('company_index')
+    fields = ['name']
+
+    def get_form(self, form_class=None):
+        form = super().get_form()
+        form.instance.company = Company.objects.get(pk=self.kwargs['pk'])
+        return form
 
 
 class CompanyIndexView(LoginRequiredMixin, ListView):
+    """Контроллер вывода списка организации телефонного справочника"""
     model = Company
     template_name = 'arm/company_index.html'
     template_name_suffix = '_index'
@@ -128,6 +142,7 @@ class CompanyIndexView(LoginRequiredMixin, ListView):
 
 
 class CompanyUpdateIndexView(LoginRequiredMixin, ListView):
+    """Контроллер вывода списка для редактирования названий организаций и их удаление"""
     template_name = 'arm/company_update_index.html'
     template_name_suffix = '_index'
     context_object_name = 'companies'
@@ -135,6 +150,7 @@ class CompanyUpdateIndexView(LoginRequiredMixin, ListView):
 
 
 class CompanyUpdateView(LoginRequiredMixin, UpdateView):
+    """Контроллер изменения названия организации"""
     model = Company
     template_name_suffix = '_update'
     template_name = 'arm/company_update.html'
@@ -143,19 +159,23 @@ class CompanyUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class CompanyUpdateSuccessfullyView(LoginRequiredMixin, TemplateView):
+    """Контроллер вывода сообщения об успешном изменнии названия организации"""
     template_name = 'arm/company_update_done.html'
 
 
 class CompanyDeleteView(LoginRequiredMixin, DeleteView):
+    """Контроллер удаления организации"""
     model = Company
     success_url = reverse_lazy('company_delete_done')
 
 
 class CompanyDeleteSuccessfullyView(LoginRequiredMixin, TemplateView):
+    """Контроллер вывода сообщения об успешном удалении организации"""
     template_name = 'arm/company_delete_done.html'
 
 
 class CompanyUnitIndexView(LoginRequiredMixin, ListView):
+    """Контроллер вывода списка подразделений организации"""
     template_name = 'arm/company_unit_index.html'
     template_name_suffix = '_index'
     context_object_name = 'units'
@@ -173,6 +193,7 @@ class CompanyUnitIndexView(LoginRequiredMixin, ListView):
 
 
 class CompanyUnitUpdateIndexView(LoginRequiredMixin, ListView):
+    """Контроллер вывода списка для редактирования названий подразделений организации и их удаление"""
     template_name = 'arm/company_unit_update_index.html'
     template_name_suffix = '_index'
     context_object_name = 'units'
@@ -190,10 +211,11 @@ class CompanyUnitUpdateIndexView(LoginRequiredMixin, ListView):
 
 
 class CompanyUnitUpdateView(LoginRequiredMixin, UpdateView):
+    """Контроллер изменения названия подразделения организации"""
     model = CompanyUnit
     template_name_suffix = '_update'
     template_name = 'arm/company_unit_update.html'
-    success_url = reverse_lazy('company_index')
+    success_url = reverse_lazy('company_unit_update_done')
     fields = ['name']
 
     def get_context_data(self):
@@ -201,13 +223,20 @@ class CompanyUnitUpdateView(LoginRequiredMixin, UpdateView):
         context['unit'] = CompanyUnit.objects.get(pk=self.kwargs['pk'])
         return context
 
-    def get_form(self):
-        form = super().get_form()
-        form.instance.company = Company.objects.get(pk=self.kwargs['pk'])
-        return form
+
+class CompanyUnitUpdateSuccessfullyView(LoginRequiredMixin, TemplateView):
+    """Контроллер вывода сообщения об успешном изменнии названия подразделения организации"""
+    model = CompanyUnit
+    template_name = 'arm/company_unit_update_done.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['unit'] = CompanyUnit.objects.get(pk=self.kwargs['pk']).pk
+        return context
 
 
 class CompanyUnitDeleteView(LoginRequiredMixin, DeleteView):
+    """Контролле удаления подразделения организации"""
     model = CompanyUnit
     success_url = reverse_lazy('company_index')
 

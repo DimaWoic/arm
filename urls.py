@@ -27,4 +27,8 @@ urlpatterns = [
     path('company_unit_delete/<int:pk>', views.CompanyUnitDeleteView.as_view(), name='company_unit_delete'),
     path('company_update_done/', views.CompanyUpdateSuccessfullyView.as_view(), name='company_update_done'),
     path('company_delete_done/', views.CompanyDeleteSuccessfullyView.as_view(), name='company_delete_done'),
+    path('company_unit_delete_done/<int:pk>', views.CompanyUnitUpdateSuccessfullyView.as_view(),
+         name='company_unit_update_done'),
+    path('company_unit_create/<int:pk>', views.CompanyUnitCreateView.as_view(), name='company_unit_create'),
+
 ]
