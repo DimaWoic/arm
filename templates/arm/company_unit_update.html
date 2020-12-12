@@ -10,6 +10,6 @@
     {{ form.as_p }}
 <a type="submit" href="{% url 'company_unit_update_done' unit.pk %}">Сохранить</a>
 </form>
-<p><a href="{% url 'company_unit_edit_index' unit.pk %}">Отменить</a></p>
+<p><a href="{% url 'company_unit_edit_index' company %}">Отменить</a></p>
 
 {% endblock content %}

@@ -118,20 +118,6 @@ class CompanyCreateView(LoginRequiredMixin, CreateView, ListView):
     queryset = Company.objects.all()
 
 
-class CompanyUnitCreateView(LoginRequiredMixin, CreateView):
-    """Контроллер создания подразделения организации телефонного справочника"""
-    model = CompanyUnit
-    template_name = 'arm/company_unit_add.html'
-    template_name_suffix = '_add'
-    success_url = reverse_lazy('company_index')
-    fields = ['name']
-
-    def get_form(self, form_class=None):
-        form = super().get_form()
-        form.instance.company = Company.objects.get(pk=self.kwargs['pk'])
-        return form
-
-
 class CompanyIndexView(LoginRequiredMixin, ListView):
     """Контроллер вывода списка организации телефонного справочника"""
     model = Company
@@ -199,6 +185,7 @@ class CompanyUnitUpdateIndexView(LoginRequiredMixin, ListView):
     context_object_name = 'units'
 
     def get_queryset(self):
+        """Метод вывода подразделений компании"""
         pk = self.kwargs['pk']
         company = Company.objects.get(pk=pk)
         queryset = CompanyUnit.objects.filter(company__name=company)
@@ -220,18 +207,22 @@ class CompanyUnitUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self):
         context = super().get_context_data()
-        context['unit'] = CompanyUnit.objects.get(pk=self.kwargs['pk'])
+        company_unit = CompanyUnit.objects.get(pk=self.kwargs['pk'])
+        context['unit'] = company_unit
+        company = Company.objects.get(name=company_unit.company.name).pk
+        context['company'] = company
         return context
 
 
 class CompanyUnitUpdateSuccessfullyView(LoginRequiredMixin, TemplateView):
     """Контроллер вывода сообщения об успешном изменнии названия подразделения организации"""
-    model = CompanyUnit
     template_name = 'arm/company_unit_update_done.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
-        context['unit'] = CompanyUnit.objects.get(pk=self.kwargs['pk']).pk
+        company_unit = CompanyUnit.objects.get(pk=self.kwargs['pk'])
+        company = Company.objects.get(name=company_unit.company.name).pk
+        context['company'] = company
         return context
 
 
@@ -246,7 +237,22 @@ class CompanyUnitDeleteView(LoginRequiredMixin, DeleteView):
         return context
 
 
+class CompanyUnitCreateView(LoginRequiredMixin, CreateView):
+    """Контроллер создания подразделения организации телефонного справочника"""
+    model = CompanyUnit
+    template_name = 'arm/company_unit_add.html'
+    template_name_suffix = '_add'
+    success_url = reverse_lazy('company_index')
+    fields = ['name']
+
+    def get_form(self, form_class=None):
+        form = super().get_form()
+        form.instance.company = Company.objects.get(pk=self.kwargs['pk'])
+        return form
+
+
 class PhoneNumberAddView(LoginRequiredMixin, CreateView):
+    """Форма добавления номера телефона подразделения организации"""
     model = PhoneNumbers
     template_name = 'arm/phone_number_add.html'
     template_name_suffix = '_add'
@@ -254,16 +260,19 @@ class PhoneNumberAddView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('phone_done')
 
     def get_form(self):
+        """Метод сохраняющий (в форме) автоматически подразделение к которому пренадлежит номер"""
         form = super().get_form()
         form.instance.unit = CompanyUnit.objects.get(pk=self.kwargs['pk'])
         return form
 
 
 class PhoneAddDoneView(LoginRequiredMixin, TemplateView):
+    """Контроллер выводит сообщение о успешном добавлении номера телефона"""
     template_name = 'arm/phone_number_add_done.html'
 
 
 class PhoneNumberUpdateView(LoginRequiredMixin, UpdateView):
+    """Контроллер выводящий форму для изменения номера телефона"""
     template_name = 'arm/phone_number_update.html'
     template_name_suffix = '_update'
     model = PhoneNumbers
@@ -272,15 +281,18 @@ class PhoneNumberUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class PhoneNumberUpdateSucces(LoginRequiredMixin, TemplateView):
+    """Контроллер выводит сообщение о успешном изменении номера телефона"""
     template_name = 'arm/number_update_succes.html'
 
 
 class PhoneNumberDeleteView(LoginRequiredMixin, DeleteView):
+    """Контроллер удаления номера телефона"""
     model = PhoneNumbers
     success_url = reverse_lazy('company_index')
 
 
 class PhoneNumberUpdateIndex(LoginRequiredMixin, ListView):
+    """Контроллер выводит список телефонных номеров для редактирования"""
     template_name = 'arm/phone_numbers_update_index.html'
     template_name_suffix = '_index'
     context_object_name = 'numbers'
