@@ -1,6 +1,6 @@
 from .models import Record, PhoneNumbers, Company, CompanyUnit
 from django.views.generic import ListView, CreateView, UpdateView, TemplateView, DeleteView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
@@ -227,7 +227,7 @@ class CompanyUnitUpdateSuccessfullyView(LoginRequiredMixin, TemplateView):
 
 
 class CompanyUnitDeleteView(LoginRequiredMixin, DeleteView):
-    """Контролле удаления подразделения организации"""
+    """Контроллер удаления подразделения организации"""
     model = CompanyUnit
     success_url = reverse_lazy('company_index')
 
@@ -276,19 +276,39 @@ class PhoneNumberUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'arm/phone_number_update.html'
     template_name_suffix = '_update'
     model = PhoneNumbers
-    success_url = reverse_lazy('phone_update_done')
     fields = ['name', 'position', 'work', 'mobile']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        phone_unit = PhoneNumbers.objects.get(pk=self.kwargs['pk'])
+        context['c_unit_pk'] = CompanyUnit.objects.get(name=phone_unit.unit.name).pk
+        return context
+
+    def get_success_url(self):
+        return reverse('phone_update_done', args=[self.kwargs['pk']])
 
 
 class PhoneNumberUpdateSucces(LoginRequiredMixin, TemplateView):
     """Контроллер выводит сообщение о успешном изменении номера телефона"""
     template_name = 'arm/number_update_succes.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        phone_unit = PhoneNumbers.objects.get(pk=self.kwargs['pk'])
+        context['c_unit_pk'] = CompanyUnit.objects.get(name=phone_unit.unit.name).pk
+        return context
+
 
 class PhoneNumberDeleteView(LoginRequiredMixin, DeleteView):
     """Контроллер удаления номера телефона"""
     model = PhoneNumbers
     success_url = reverse_lazy('company_index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        phone_unit = PhoneNumbers.objects.get(pk=self.kwargs['pk'])
+        context['c_unit_pk'] = CompanyUnit.objects.get(name=phone_unit.unit.name).pk
+        return context
 
 
 class PhoneNumberUpdateIndex(LoginRequiredMixin, ListView):

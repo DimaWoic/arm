@@ -11,7 +11,9 @@
 
 <form method="post">{% csrf_token %}
             <input type="submit" value="Удалить">
-        </form>
+</form>
+
+<p><a href="{% url 'phone_update_index' c_unit_pk %}">Отменить</a></p>
 
 
 
