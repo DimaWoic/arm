@@ -30,5 +30,6 @@ urlpatterns = [
     path('company_unit_delete_done/<int:pk>', views.CompanyUnitUpdateSuccessfullyView.as_view(),
          name='company_unit_update_done'),
     path('company_unit_create/<int:pk>', views.CompanyUnitCreateView.as_view(), name='company_unit_create'),
-
+    path('main_schema', views.SchemaMainView.as_view(), name='schema_main'),
+    path('company_search_result', views.CompanySearchResultView.as_view(), name='company_search'),
 ]

@@ -278,7 +278,6 @@ class PhoneAddDoneView(LoginRequiredMixin, TemplateView):
         return context
 
 
-
 class PhoneNumberUpdateView(LoginRequiredMixin, UpdateView):
     """Контроллер выводящий форму для изменения номера телефона"""
     template_name = 'arm/phone_number_update.html'
@@ -336,3 +335,20 @@ class PhoneNumberUpdateIndex(LoginRequiredMixin, ListView):
         context['c_unit'] = CompanyUnit.objects.get(pk=self.kwargs['pk'])
         return context
 
+
+class SchemaMainView(LoginRequiredMixin, TemplateView):
+    template_name = 'arm/schema_main.html'
+
+
+class CompanySearchResultView(LoginRequiredMixin, ListView):
+    """Контроллер поиска организации в телефонном справочнике"""
+    model = Company
+    template_name_suffix = '_result'
+    template_name = 'arm/company_search_result.html'
+    context_object_name = 'companies'
+
+    def get_queryset(self):
+        search = self.request.GET.get('q')
+        query = Q(name=search)
+        result = Company.objects.filter(query)
+        return result

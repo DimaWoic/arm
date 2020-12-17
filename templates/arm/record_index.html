@@ -3,7 +3,8 @@
 {% block content %}
 
 <p><h3>Оперативный журнал</h3></p>
-<p><a href="{% url 'add_record' %}">Добавить запись</a> <form action="{% url 'search' %}" method="get">
+<p><a href="{% url 'add_record' %}">Добавить запись</a>
+<form action="{% url 'search' %}" method="get">
   <input name="q" type="text" placeholder="Искать...">
 </form>
 <form action="{% url 'search_date' %}" method="get">
