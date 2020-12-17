@@ -257,7 +257,6 @@ class PhoneNumberAddView(LoginRequiredMixin, CreateView):
     template_name = 'arm/phone_number_add.html'
     template_name_suffix = '_add'
     fields = ['name', 'position', 'work', 'mobile']
-    success_url = reverse_lazy('phone_done')
 
     def get_form(self):
         """Метод сохраняющий (в форме) автоматически подразделение к которому пренадлежит номер"""
@@ -265,10 +264,19 @@ class PhoneNumberAddView(LoginRequiredMixin, CreateView):
         form.instance.unit = CompanyUnit.objects.get(pk=self.kwargs['pk'])
         return form
 
+    def get_success_url(self):
+        return reverse('phone_done', args=[self.kwargs['pk']])
+
 
 class PhoneAddDoneView(LoginRequiredMixin, TemplateView):
     """Контроллер выводит сообщение о успешном добавлении номера телефона"""
     template_name = 'arm/phone_number_add_done.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['c_unit_pk'] = CompanyUnit.objects.get(pk=self.kwargs['pk']).pk
+        return context
+
 
 
 class PhoneNumberUpdateView(LoginRequiredMixin, UpdateView):
