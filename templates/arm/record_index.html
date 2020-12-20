@@ -2,16 +2,18 @@
 {% block title %} Оперативный журнал {% endblock title %}
 {% block content %}
 
-<p><h3>Оперативный журнал</h3></p>
-<p><a href="{% url 'add_record' %}">Добавить запись</a>
-<form action="{% url 'search' %}" method="get">
-  <input name="q" type="text" placeholder="Искать...">
-</form>
-<form action="{% url 'search_date' %}" method="get">
-  <input name="date" type="date">
-  <button type="submit">Искать</button>
-</form>
-</p>
+<p class="mt-2" id="block_header">{% block header %} Оперативный журнал {% endblock header %}</p>
+<div class="mb-2" id="#">
+  <div class="#" id="search_date">
+     <form action="{% url 'search_date' %}" method="get"><input name="date" type="date"><button type="submit">Искать</button></form>
+  </div>
+  <div id="search_action">
+    <form action="{% url 'search' %}" method="get"><input name="q" type="text" placeholder="Искать..."><button type="submit">Искать</button></form>
+  </div>
+  <div id="record_add_btn">
+    <a class="btn btn-primary" href="{% url 'add_record' %}">Добавить запись</a>
+  </div>
+</div>
 
 <table class="table table-hover table-dark table-bordered">
   <thead>

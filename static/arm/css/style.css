@@ -60,3 +60,36 @@
 #num_car {
     width: 5%;
 }
+
+#name_disp {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+
+#brand {
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+}
+
+#block_header {
+    font-family: 'Anton', sans-serif;
+    font-size: 30px;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 2px;
+    border-bottom: 1px gray solid;
+    padding-bottom: 10px;
+}
+
+#search_date {
+    float: left;
+    width: 27.5%;
+}
+
+#search_action {
+    float: left;
+}
+
+#record_add_btn {
+    float: right;
+}
