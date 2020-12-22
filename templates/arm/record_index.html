@@ -5,17 +5,23 @@
 <p class="mt-2" id="block_header">{% block header %} Оперативный журнал {% endblock header %}</p>
 <div class="mb-2" id="#">
   <div class="#" id="search_date">
-     <form action="{% url 'search_date' %}" method="get"><input name="date" type="date"><button type="submit">Искать</button></form>
+     <form action="{% url 'search_date' %}" method="get">
+       <input class="#" name="date" type="date">
+       <button class="btn btn-outline-info" type="submit">Искать</button>
+     </form>
   </div>
   <div id="search_action">
-    <form action="{% url 'search' %}" method="get"><input name="q" type="text" placeholder="Искать..."><button type="submit">Искать</button></form>
+    <form action="{% url 'search' %}" method="get">
+      <input name="q" type="text" placeholder="Искать...">
+      <button class="btn btn-outline-info" type="submit">Искать</button>
+    </form>
   </div>
   <div id="record_add_btn">
     <a class="btn btn-primary" href="{% url 'add_record' %}">Добавить запись</a>
   </div>
 </div>
 
-<table class="table table-hover table-dark table-bordered">
+<table class="table bg-info table-bordered">
   <thead>
     <tr>
       <th scope="col" id="date_time">Дата/Время</th>
@@ -41,7 +47,7 @@
       <td>{{record.note}}</td>
       <td>{{record.brigade }}</td>
       <td>{{record.num_car}}</td>
-      <td><a href="{% url 'record_update' record.pk %}">Редактировать</a></td>
+      <td><a class="btn btn-secondary" href="{% url 'record_update' record.pk %}">Редактировать</a></td>
     </tr>
   {% endif %}
   {% endfor %}

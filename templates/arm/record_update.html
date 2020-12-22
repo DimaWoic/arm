@@ -1,10 +1,42 @@
 {% extends 'arm/base/base.html' %}
 
+{% block title %} Изменение записи в оперативном журнале {% endblock title %}
+
 {% block content %}
 
+<p class="mt-2" id="block_header">Изменение записи в оперативном журнале</p>
+
+<table class="table bg-info table-bordered mt-2">
+  <thead>
+    <tr>
+      <th scope="col" id="from_who">От кого</th>
+      <th scope="col" id="route">Маршрут</th>
+      <th scope="col" id="transport">Вид транспорта</th>
+      <th scope="col" id="description">Событие</th>
+      <th scope="col" id="note">Примечание</th>
+      <th scope="col" id="brigade">Бригада</th>
+      <th scope="col" id="num_car">Номер машины</th>
+      <th scope="col" id="update">Добавить запись</th>
+    </tr>
+  </thead>
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-<input type="submit" value="Сохранить изменения">
+  <tbody>
+    <tr class="bg-light text-dark">
+      <td>{{form.from_who}}</td>
+      <td>{{form.route}}</td>
+      <td>{{form.transport}}</td>
+      <td>{{form.description}}</td>
+      <td>{{form.note}}</td>
+      <td>{{form.brigade }}</td>
+      <td>{{form.num_car}}</td>
+      <td><input type="submit" value="Сохранить изменения"></td>
+    </tr>
+  </tbody>
+</form>
+</table>
 
+<div id="record_add_btn">
+    <a class="btn btn-danger" href="{% url 'record_index' %}">Отменить</a>
+</div>
 {% endblock content %}
