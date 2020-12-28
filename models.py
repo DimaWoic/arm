@@ -1,4 +1,8 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+import telebot
+
 
 class Transport(models.Model):
     name = models.CharField(max_length=50, verbose_name='вид транспорта', default='')
@@ -88,3 +92,19 @@ class PhoneNumbers(models.Model):
 
     def __str__(self):
         return self.name
+
+
+bot = telebot.TeleBot(token='', parse_mode='HTML')
+
+
+def send_massage(message):
+    bot.send_message(chat_id='', text=message, disable_web_page_preview=True, parse_mode='HTML')
+
+
+@receiver(post_save, sender=Record)
+def sender_record(sender, **kwargs):
+    if kwargs['created']:
+        message = kwargs['instance'].from_who + ' ' + str(kwargs['instance'].route.name) + ' ' + \
+                  kwargs['instance'].transport.name + ' ' + kwargs['instance'].description + ' ' + kwargs[
+                      'instance'].brigade + ' ' + kwargs['instance'].num_car.name
+        print(message)
