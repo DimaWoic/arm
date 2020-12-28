@@ -5,7 +5,7 @@ import telebot
 
 
 class Transport(models.Model):
-    name = models.CharField(max_length=50, verbose_name='вид транспорта', default='')
+    name = models.CharField(max_length=50, verbose_name='вид транспорта', default='', unique=True)
 
     class Meta:
         verbose_name = 'Вид транспорта'
@@ -16,7 +16,7 @@ class Transport(models.Model):
 
 
 class Route(models.Model):
-    name = models.DecimalField(max_digits=3, decimal_places=0, verbose_name='номер маршрута', default=0)
+    name = models.CharField(max_length=2, verbose_name='номер маршрута', default='', unique=True)
     
     class Meta:
         verbose_name = 'номер маршрута'
@@ -27,7 +27,7 @@ class Route(models.Model):
     
 
 class NumCar(models.Model):
-    name = models.CharField(verbose_name='Номер машины', max_length=100)
+    name = models.CharField(verbose_name='Номер машины', max_length=10, unique=True)
 
     class Meta:
         verbose_name = 'номер машины'
@@ -46,7 +46,7 @@ class Record(models.Model):
     description = models.TextField(verbose_name='заявка', default='')
     note = models.TextField(verbose_name='примечание', default='')
     brigade = models.CharField(max_length=50, verbose_name='бригада', default='')
-    num_car = models.ForeignKey(NumCar, verbose_name='номер машины',on_delete=models.CASCADE)
+    num_car = models.ForeignKey(NumCar, verbose_name='номер машины', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'заявка'
