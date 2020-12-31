@@ -352,3 +352,17 @@ class CompanySearchResultView(LoginRequiredMixin, ListView):
         query = Q(name=search)
         result = Company.objects.filter(query)
         return result
+
+
+class RecordPdfView(LoginRequiredMixin, ListView):
+    """Контроллер вывода всех записей в оперативном журнале"""
+    queryset = Record.objects.all()
+    template_name = 'arm/pdf_index.html'
+    template_name_suffix = '_index'
+    context_object_name = 'records'
+    login_url = reverse_lazy('login')
+
+    def get_login_url(self, **kwargs):
+        super().get_login_url(**kwargs)
+        login_url = reverse_lazy('login')
+        return login_url

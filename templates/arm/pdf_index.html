@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<body>
+
+<table class="table bg-info table-bordered">
+  <thead>
+    <tr>
+      <th scope="col" id="date_time">Дата/Время</th>
+      <th scope="col" id="from_who">От кого</th>
+      <th scope="col" id="route">Маршрут</th>
+      <th scope="col" id="transport">Вид транспорта</th>
+      <th scope="col" id="description">Событие</th>
+      <th scope="col" id="note">Примечание</th>
+      <th scope="col" id="brigade">Бригада</th>
+      <th scope="col" id="num_car">Номер машины</th>
+    </tr>
+  </thead>
+  {% for record in records %}
+  <tbody>
+  {% if record %}
+    <tr class="bg-light text-dark">
+      <td>{{record.date}} {{ record.time }}</td>
+      <td>{{record.from_who}}</td>
+      <td>{{record.route}}</td>
+      <td>{{record.transport}}</td>
+      <td>{{record.description}}</td>
+      <td>{{record.note}}</td>
+      <td>{{record.brigade }}</td>
+      <td>{{record.num_car}}</td>
+    </tr>
+  {% endif %}
+  {% endfor %}
+  </tbody>
+</table>
+
+</body>
+</html>

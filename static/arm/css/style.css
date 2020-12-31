@@ -93,3 +93,31 @@
 #record_add_btn {
     float: right;
 }
+
+#id_from_who {
+    width: 100%;
+}
+
+#id_route {
+    width: 100%;
+}
+
+#id_transport {
+    width: 100%;
+}
+
+#id_description {
+    width: 100%;
+}
+
+#id_note {
+    width: 100%;
+}
+
+#id_brigade {
+    width: 100%;
+}
+
+#id_num_car {
+    width: 100%;
+}

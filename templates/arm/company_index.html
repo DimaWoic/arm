@@ -2,7 +2,7 @@
 {% block title %} Телефонный справочник {% endblock title %}
 {% block content %}
 
-<p><h3>Телефонный справочник</h3></p>
+<p class="mt-2" id="block_header">{% block header %} Телефонный справочник {% endblock header %}</p>
 <p><form action="{% url 'company_search' %}" method="get">
   <input name="q" type="text" placeholder="Искать...">
 </form>
