@@ -4,6 +4,10 @@ from django.urls import reverse_lazy, reverse
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
+from weasyprint import HTML
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from weasyprint import HTML
 
 
 class UserLoginView(LoginView):
@@ -354,15 +358,10 @@ class CompanySearchResultView(LoginRequiredMixin, ListView):
         return result
 
 
-class RecordPdfView(LoginRequiredMixin, ListView):
-    """Контроллер вывода всех записей в оперативном журнале"""
-    queryset = Record.objects.all()
-    template_name = 'arm/pdf_index.html'
-    template_name_suffix = '_index'
-    context_object_name = 'records'
-    login_url = reverse_lazy('login')
-
-    def get_login_url(self, **kwargs):
-        super().get_login_url(**kwargs)
-        login_url = reverse_lazy('login')
-        return login_url
+def get_pdf(request):
+    records = Record.objects.all()
+    response = HttpResponse(content_type='application/pdf')
+    html = render_to_string('arm/pdf_index.html', context={'records': records})
+    response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
+    HTML(string=html).write_pdf(target=response)
+    return response

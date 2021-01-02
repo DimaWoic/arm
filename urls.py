@@ -32,5 +32,5 @@ urlpatterns = [
     path('company_unit_create/<int:pk>', views.CompanyUnitCreateView.as_view(), name='company_unit_create'),
     path('main_schema', views.SchemaMainView.as_view(), name='schema_main'),
     path('company_search_result', views.CompanySearchResultView.as_view(), name='company_search'),
-    path('record_index/pdf/', views.RecordPdfView.as_view(), name='convert_pdf')
+    path('record_index/pdf/', views.get_pdf, name='convert_pdf')
 ]
