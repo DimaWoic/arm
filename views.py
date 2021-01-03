@@ -4,10 +4,10 @@ from django.urls import reverse_lazy, reverse
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from weasyprint import HTML
 from django.http import HttpResponse
 from django.template.loader import render_to_string
-from weasyprint import HTML
+from weasyprint import HTML, CSS
+import datetime
 
 
 class UserLoginView(LoginView):
@@ -33,6 +33,7 @@ class RecordIndexView(LoginRequiredMixin, ListView):
     template_name_suffix = '_index'
     context_object_name = 'records'
     login_url = reverse_lazy('login')
+    ordering = ['-id']
 
     def get_login_url(self, **kwargs):
         super().get_login_url(**kwargs)
@@ -362,6 +363,7 @@ def get_pdf(request):
     records = Record.objects.all()
     response = HttpResponse(content_type='application/pdf')
     html = render_to_string('arm/pdf_index.html', context={'records': records})
-    response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
-    HTML(string=html).write_pdf(target=response)
+    date_time = datetime.datetime.today().strftime("%d_%m_%Y-%H_%M_%S")
+    response['Content-Disposition'] = 'attachment; filename=' + 'report' + str(date_time) + '.pdf'
+    HTML(string=html).write_pdf(target=response, stylesheets=[CSS(string='@page { margin: 0.5cm }')])
     return response
