@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<style type="text/css" media="screen, print">
+      body {
+         font-size: 11px;
+      }
+
+      th, td {
+      border: 1px solid black;
+      padding: 10px;
+      border-spacing: 0px;
+      }
+    </style>
+
+<table>
+    <tr>
+      <th>Дата/Время</th>
+      <th>От кого</th>
+      <th>Маршрут</th>
+      <th>Вид транспорта</th>
+      <th>Событие</th>
+      <th>Примечание</th>
+      <th>Бригада</th>
+      <th>Номер машины</th>
+    </tr>
+  {% for record in records %}
+  <tbody>
+  {% if record %}
+    <tr>
+      <td>{{record.date}} {{ record.time }}</td>
+      <td>{{record.from_who}}</td>
+      <td>{{record.route}}</td>
+      <td>{{record.transport}}</td>
+      <td>{{record.description}}</td>
+      <td>{{record.note}}</td>
+      <td>{{record.brigade }}</td>
+      <td>{{record.num_car}}</td>
+    </tr>
+  {% endif %}
+  {% endfor %}
+  </tbody>
+</table>
+
+</body>
+</html>
