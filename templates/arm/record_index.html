@@ -6,7 +6,8 @@
 <div class="mb-2" id="#">
   <div class="#" id="search_date">
      <form action="{% url 'search_date' %}" method="get">
-       <input class="#" name="date" type="date">
+       <input class="#" name="date_start" type="date" required>
+       <input class="#" name="date_end" type="date" id="end_date" required>
        <button class="btn btn-outline-info" type="submit">Искать</button>
      </form>
   </div>

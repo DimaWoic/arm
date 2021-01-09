@@ -40,12 +40,12 @@ class NumCar(models.Model):
 class Record(models.Model):
     date = models.DateField(verbose_name='дата заявки', auto_now_add=True, null=True)
     time = models.TimeField(verbose_name='время заявки', auto_now_add=True, null=True)
-    from_who = models.CharField(verbose_name='от кого', max_length=250, default='')
+    from_who = models.CharField(verbose_name='от кого', max_length=250, default='', null=True)
     transport = models.ForeignKey(Transport, on_delete=models.CASCADE, verbose_name='вид транспорта')
     route = models.ForeignKey(Route, on_delete=models.CASCADE, verbose_name='номер маршрута')
-    description = models.TextField(verbose_name='заявка', default='')
-    note = models.TextField(verbose_name='примечание', default='')
-    brigade = models.CharField(max_length=50, verbose_name='бригада', default='')
+    description = models.TextField(verbose_name='заявка', default='', null=True)
+    note = models.TextField(verbose_name='примечание', default='', null=True)
+    brigade = models.CharField(max_length=50, verbose_name='бригада', default='', null=True)
     num_car = models.ForeignKey(NumCar, verbose_name='номер машины', on_delete=models.CASCADE)
 
     class Meta:
@@ -94,17 +94,18 @@ class PhoneNumbers(models.Model):
         return self.name
 
 
-bot = telebot.TeleBot(token='', parse_mode='HTML')
+bot = telebot.TeleBot(token='1263816311:AAHtoS8SYIDL6i1LBPH8Csmf7k985MbpcgA', parse_mode='HTML')
 
 
 def send_massage(message):
-    bot.send_message(chat_id='', text=message, disable_web_page_preview=True, parse_mode='HTML')
+    bot.send_message(chat_id='@sget_energo', text=message, disable_web_page_preview=True, parse_mode='HTML')
 
 
 @receiver(post_save, sender=Record)
 def sender_record(sender, **kwargs):
     if kwargs['created']:
-        message = kwargs['instance'].from_who + ' ' + str(kwargs['instance'].route.name) + ' ' + \
+        message = str(kwargs['instance'].route.name) + ' ' + \
                   kwargs['instance'].transport.name + ' ' + kwargs['instance'].description + ' ' + kwargs[
                       'instance'].brigade + ' ' + kwargs['instance'].num_car.name
-        print(message)
+        send_massage(message)
+

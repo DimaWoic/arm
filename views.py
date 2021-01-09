@@ -78,7 +78,6 @@ class RecordSearchResultView(LoginRequiredMixin, ListView):
         self.search = self.request.GET.get('q')
         query = Q(from_who__icontains=self.search) | Q(description__icontains=self.search)
         result = Record.objects.filter(query)
-        print(self.search)
         return result
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -106,9 +105,34 @@ class RecordSearchDateResultView(LoginRequiredMixin, ListView):
     context_object_name = 'records'
 
     def get_queryset(self):
-        search = self.request.GET.get('date')
-        query = Record.objects.filter(date=search)
+        self.date_start = self.request.GET.get('date_start')
+        self.date_end = self.request.GET.get('date_end')
+        if self.date_end == '':
+            date_end = datetime.date.today()
+            date = (self.date_start, date_end)
+        else:
+            date = (self.date_start, self.date_end)
+        query = Record.objects.filter(date__range=date)
         return query
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data()
+        context['date_start'] = self.date_start
+        context['date_end'] = self.date_end
+        return context
+
+
+def get_search_date_pdf(request, date_start, date_end):
+    if date_end == '':
+        records = Record.objects.filter(date__range=(date_start, datetime.date.today()))
+    else:
+        records = Record.objects.filter(date__range=(date_start, date_end))
+    response = HttpResponse(content_type='application/pdf')
+    html = render_to_string('arm/pdf_index_search.html', context={'records': records})
+    date_time = datetime.datetime.today().strftime("%d_%m_%Y-%H_%M_%S")
+    response['Content-Disposition'] = 'attachment; filename=' + 'report' + str(date_time) + '.pdf'
+    HTML(string=html).write_pdf(target=response, stylesheets=[CSS(string='@page { margin: 0.5cm }')])
+    return response
 
 
 class PhoneNumbersIndexView(LoginRequiredMixin, ListView):

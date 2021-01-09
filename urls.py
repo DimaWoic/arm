@@ -34,4 +34,5 @@ urlpatterns = [
     path('company_search_result', views.CompanySearchResultView.as_view(), name='company_search'),
     path('record_index/pdf/', views.get_pdf, name='convert_pdf'),
     path('record_index/pdf/<str:search>', views.get_search_pdf, name='convert_search_pdf'),
+    path('record_search_date/pdf/<str:date_start>/<str:date_end>', views.get_search_date_pdf, name='search_date_pdf'),
 ]
