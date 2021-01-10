@@ -1,21 +1,43 @@
-{% extends 'arm/base/base.html' %}
 {% load static %}
-
-{% block content %}
-<div class="border">
-    <div class="#" id="login_form">
-        <form method="post" class="m-3">
-        {% csrf_token %}
-        <div class="form-group">
-        <p id='login_text'>Вход в учётную запись</p>
-        <input type="hidden" name="next" value="{{ next }}">
-
-        {{form.as_p}}
-
-        <p><button type="submit" class="btn btn-primary btn-sm" id='login_button'>Вход</button></p>
+<html>
+<head>
+    <title>{% block title %}Арм электродиспетчера{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'arm/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'arm/css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="#">
+        <div class="#" id="login_form">
+            <form method="post" class="m-3">
+                {% csrf_token %}
+              <p id='login_text'>Вход в учётную запись</p>
+              <input type="hidden" name="next" value="{{ next }}">
+              <div class="form-group">
+                <label>{{form.username.label}}</label>
+                <p>{{form.username}}</p>
+              </div>
+              <div class="form-group">
+                <label>{{form.password.label}}</label>
+                <p>{{form.password}}</p>
+              </div>
+              <div>
+                      {% for error in form.non_field_errors %}
+                       <p class="errors">{{ error|escape }}</p>
+                      {% endfor %}
+              </div>
+              <button type="submit" class="btn btn-primary" id="login_button">Вход</button>
+            </form>
         </div>
-        </form>
     </div>
-</div>
 
-{% endblock content %}
+<script src="{% static 'arm/js/jquery-3.5.1.min.js' %}"></script>
+<script src="{% static 'arm/js/popper.min.js' %}"></script>
+<script src="{% static 'arm/js/bootstrap.js' %}"></script>
+<script src="{% static 'arm/js/script.js' %}"></script>
+
+</body>
+</html>

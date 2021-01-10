@@ -14,6 +14,8 @@ class UserLoginView(LoginView):
     """Контроллер формы входа в систему"""
     template_name = 'arm/login.html'
     redirect_authenticated_user = True
+    error_css_class = 'errors'
+    set_expiry = 86200
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

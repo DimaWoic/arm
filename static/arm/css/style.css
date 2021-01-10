@@ -14,15 +14,12 @@
     position: fixed; 
     top: 25%;
     left: 40%;
-    background-color: 383838;
-    border: 1px;
-    border-color: cornflowerblue;
-    border-style: solid;
+    width: 250px;
 }
 
 #login_button {
     position: relative;
-    left: 37%;
+    left: 33%;
 }
 
 #login_text {
@@ -120,4 +117,8 @@
 
 #id_num_car {
     width: 100%;
+}
+
+.errors {
+    color:  red;
 }
