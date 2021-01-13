@@ -107,5 +107,5 @@ def sender_record(sender, **kwargs):
         message = str(kwargs['instance'].route.name) + ' ' + \
                   kwargs['instance'].transport.name + ' ' + kwargs['instance'].description + ' ' + kwargs[
                       'instance'].brigade + ' ' + kwargs['instance'].num_car.name
-        send_massage(message)
+        #send_massage(message)
 
