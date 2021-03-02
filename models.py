@@ -94,11 +94,11 @@ class PhoneNumbers(models.Model):
         return self.name
 
 
-bot = telebot.TeleBot(token='1263816311:AAHtoS8SYIDL6i1LBPH8Csmf7k985MbpcgA', parse_mode='HTML')
+bot = telebot.TeleBot(token='', parse_mode='HTML')
 
 
 def send_massage(message):
-    bot.send_message(chat_id='@sget_energo', text=message, disable_web_page_preview=True, parse_mode='HTML')
+    bot.send_message(chat_id='', text=message, disable_web_page_preview=True, parse_mode='HTML')
 
 
 @receiver(post_save, sender=Record)
